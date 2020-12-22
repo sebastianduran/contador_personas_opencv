@@ -1,14 +1,7 @@
 # USAGE
-# To read and write back out to video:
-# python people_counter.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
-#	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/example_01.mp4 \
-#	--output output/output_01.avi
 #
-# To read from webcam and write back out to disk:
-# python people_counter.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
-#	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel \
-#	--output output/webcam_output.avi
-
+# To read from dvr
+# python cam1caps.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input "rtsp://192.168.1.10:554/user=admin&password=admin&channel=1&stream=0.sdp?" 
 # import the necessary packages
 from pyimagesearch.centroidtracker import CentroidTracker
 from pyimagesearch.trackableobject import TrackableObject
@@ -101,7 +94,7 @@ aux = [0, 0, 0,
 fps = FPS().start()
 
 # Inicializacion de la base de datos
-firebase = firebase.FirebaseApplication("https://hotelkensyadmin.firebaseio.com/", None)
+firebase = firebase.FirebaseApplication("https://peopletracker-ef32a-default-rtdb.firebaseio.com/", None)
 
 # loop over frames from the video stream
 while True:
