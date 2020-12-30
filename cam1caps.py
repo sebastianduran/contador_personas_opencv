@@ -4,10 +4,10 @@
 #	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/example_01.mp4 \
 #	--output output/output_01.avi
 #
-# To read from webcam and write back out to disk:
-# python people_counter.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
-#	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel \
-#	--output output/webcam_output.avi
+# To read from ip cam no output video
+# python cam1caps.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
+# 	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel \
+# 	--input "rtsp://user:password@000.000.0.00:554/cam/realmonitor?channel=19&subtype=1" 
 
 # import the necessary packages
 from pyimagesearch.centroidtracker import CentroidTracker
@@ -21,7 +21,10 @@ import time
 import dlib
 import cv2
 from firebase import firebase
+import os
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
@@ -41,10 +44,10 @@ args = vars(ap.parse_args())
 
 # initialize the list of class labels MobileNet SSD was trained to
 # detect
-CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
+CLASSES = [ "background", "aeroplane", "bicycle", "bird", "boat",
 	"bottle", "bus", "car", "cat", "chair", "cow", "diningtable",
 	"dog", "horse", "motorbike", "person", "pottedplant", "sheep",
-	"sofa", "train", "tvmonitor"]
+	"sofa", "train", "tvmonitor" ]
 
 # load our serialized model from disk
 print("[INFO] loading model...")
@@ -101,7 +104,7 @@ aux = [0, 0, 0,
 fps = FPS().start()
 
 # Inicializacion de la base de datos
-firebase = firebase.FirebaseApplication("https://hotelkensyadmin.firebaseio.com/", None)
+firebase = firebase.FirebaseApplication(os.getenv('FIREBASE_DB'), None)
 
 # loop over frames from the video stream
 while True:
@@ -118,7 +121,8 @@ while True:
 	# resize the frame to have a maximum width of 500 pixels (the
 	# less data we have, the faster we can process it), then convert
 	# the frame from BGR to RGB for dlib
-	frame = imutils.resize(frame, width=500)
+	# si da error aqui es posible que no 
+	frame = imutils.resize(frame, width=800)
 	rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 	# if the frame dimensions are empty, set them

@@ -1,2 +1,5 @@
 output/*
 videos/*
+venv/*
+*.vscode
+.env
