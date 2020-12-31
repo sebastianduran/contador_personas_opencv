@@ -1,14 +1,15 @@
 # USAGE
-# To read and write back out to video:
-# python people_counter.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
-#	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input videos/example_01.mp4 \
-#	--output output/output_01.avi
 #
+<<<<<<< HEAD
 # To read from ip cam no output video
 # python cam1caps.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt \
 # 	--model mobilenet_ssd/MobileNetSSD_deploy.caffemodel \
 # 	--input "rtsp://user:password@000.000.0.00:554/cam/realmonitor?channel=19&subtype=1" 
 
+=======
+# To read from dvr
+# python cam1caps.py --prototxt mobilenet_ssd/MobileNetSSD_deploy.prototxt --model mobilenet_ssd/MobileNetSSD_deploy.caffemodel --input "rtsp://192.168.1.10:554/user=admin&password=admin&channel=1&stream=0.sdp?" 
+>>>>>>> ac6889e85606385a1c2827cc4fcb365ee08ce017
 # import the necessary packages
 from pyimagesearch.centroidtracker import CentroidTracker
 from pyimagesearch.trackableobject import TrackableObject
@@ -104,7 +105,11 @@ aux = [0, 0, 0,
 fps = FPS().start()
 
 # Inicializacion de la base de datos
+<<<<<<< HEAD
 firebase = firebase.FirebaseApplication(os.getenv('FIREBASE_DB'), None)
+=======
+firebase = firebase.FirebaseApplication("https://peopletracker-ef32a-default-rtdb.firebaseio.com/", None)
+>>>>>>> ac6889e85606385a1c2827cc4fcb365ee08ce017
 
 # loop over frames from the video stream
 while True:

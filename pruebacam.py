@@ -3,8 +3,12 @@
 import numpy as np
 import cv2
 import sys
+import os
+from dotenv import load_dotenv, find_dotenv
 
-cap = cv2.VideoCapture("rtsp://admin:admin12345@192.168.1.108:554/cam/realmonitor?channel=19&subtype=1" )
+load_dotenv(find_dotenv())
+
+cap = cv2.VideoCapture((os.getenv('VIDEO_ADREESS') )
 
 while(True):
     # Capture frame-by-frame
